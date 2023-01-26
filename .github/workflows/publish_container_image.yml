@@ -29,8 +29,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: docker build
       run: |
-        docker build src/Web/ -t ${{ inputs.containerRegistryName }}/web:${{ inputs.githubSha }}
-        docker build src/PublicApi/ -t ${{ inputs.containerRegistryName }}/api:${{ inputs.githubSha}}
+        docker build . -f src/Web/Dockerfile -t ${{ inputs.containerRegistryName }}/web:${{ inputs.githubSha }}
+        docker build . -f src/PublicApi/Dockerfile -t ${{ inputs.containerRegistryName }}/api:${{ inputs.githubSha}}
     - name: scan web container image
       uses: Azure/container-scan@v0
       with:
