@@ -2,6 +2,10 @@ name: eShopOnWeb Build and Test
 
 on: [push, pull_request, workflow_dispatch]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
 
@@ -20,3 +24,13 @@ jobs:
     
     - name: Test with dotnet
       run: dotnet test ./eShopOnWeb.sln --configuration Release
+  
+  publish_container_image:
+    uses: ./.github/workflows/publish_container_image.yml
+    with:
+      containerRegistryName: 'acrudavoz.azurecr.io'
+      githubSha: ${{ github.sha }}
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
