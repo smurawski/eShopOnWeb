@@ -108,6 +108,6 @@ resource roleAssignmentDeploymentContributor 'Microsoft.Authorization/roleAssign
   ]
 }
 
-output acr_login_server_url string = 'https://${containerRegistry.name}.azurecr.io'
+output acr_login_server_url string = '${containerRegistry.name}.azurecr.io'
 output acr_name string = containerRegistry.name
 output aks_name string = aks.name
