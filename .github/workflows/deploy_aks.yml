@@ -47,6 +47,7 @@ jobs:
       with:
         deploymentName: ${{ github.run_number }}
         scope: subscription
+        region: eastus
         template: ./deploy/main.bicep
         parameters: >
           resourceGroup=${{ inputs.resourceGroupName }}
@@ -75,6 +76,7 @@ jobs:
         failOnStdErr: false
         deploymentName: ${{ github.run_number }}
         scope: subscription
+        region: eastus
         template: ./deploy/main.bicep
         parameters: >
           resourceGroup=${{ inputs.resourceGroupName }}
