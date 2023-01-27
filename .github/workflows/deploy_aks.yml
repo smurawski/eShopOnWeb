@@ -46,6 +46,7 @@ jobs:
       name: Run preflight validation
       with:
         deploymentName: ${{ github.run_number }}
+        scope: subscription
         template: ./deploy/main.bicep
         parameters: >
           resourceGroup=${{ inputs.resourceGroupName }}
@@ -73,6 +74,7 @@ jobs:
       with:
         failOnStdErr: false
         deploymentName: ${{ github.run_number }}
+        scope: subscription
         template: ./deploy/main.bicep
         parameters: >
           resourceGroup=${{ inputs.resourceGroupName }}
