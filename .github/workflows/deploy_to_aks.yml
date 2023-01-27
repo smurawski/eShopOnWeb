@@ -50,5 +50,5 @@ jobs:
           kubectl apply -f ./manifests/deployment-db.yaml \
                         -f ./manifests/service-db.yaml
           kubectl apply -k ./manifests
-          kubectl apply -f ./manifests/serice-api.yaml \
-                        -f ./manifests/serice-web.yaml
+          kubectl apply -f ./manifests/service-api.yaml \
+                        -f ./manifests/service-web.yaml
