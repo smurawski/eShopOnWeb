@@ -47,4 +47,8 @@ jobs:
           az aks get-credentials --resource-group ${{ inputs.resourceGroupName }} --name ${{ inputs.aksName }}
       - name: Apply Kubernetes Configuration
         run: |
+          kubectl apply -f ./manifests/deployment-db.yaml \
+                        -f ./manifests/service-db.yaml
           kubectl apply -k ./manifests
+          kubectl apply -f ./manifests/serice-api.yaml \
+                        -f ./manifests/serice-web.yaml
