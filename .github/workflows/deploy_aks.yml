@@ -13,11 +13,19 @@ on:
         required: true
       AZURE_SUBSCRIPTION_ID:
         required: true
-    outputs: 
-      containerRegistryName: ${{ jobs.deploy.outputs.containerRegistryName }}
-      containerRegistryUrl: ${{ jobs.deploy.outputs.containerRegistryUrl }}
-      resourceGroupName: ${{ jobs.deploy.outputs.resourceGroupName }}
-      aksName: ${{ jobs.deploy.outputs.aksName }}
+    outputs:
+      containerRegistryName:
+        description: Container Registry Name
+        value: ${{ jobs.deploy.outputs.containerRegistryName }}
+      containerRegistryUrl:
+        description: Container Registry Login Url
+        value: ${{ jobs.deploy.outputs.containerRegistryUrl }}
+      resourceGroupName:
+        description: Resource Group Name
+        value: ${{ jobs.deploy.outputs.resourceGroupName }}
+      aksName:
+        description: Azure Kubernetes Service Cluster Name
+        value: ${{ jobs.deploy.outputs.aksName }}
 
 permissions:
   id-token: write
@@ -26,7 +34,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
     - uses: actions/checkout@v2
     - uses: azure/login@v1
       name: Sign in to Azure
@@ -42,11 +50,11 @@ jobs:
         parameters: >
           resourceGroup=${{ inputs.resourceGroupName }}
         deploymentMode: Validate
- 
+
   deploy:
     needs: validate
     runs-on: ubuntu-latest
-    outputs: 
+    outputs:
       containerRegistryName: ${{ steps.deploy.outputs.acr_name }}
       containerRegistryUrl: ${{ steps.deploy.outputs.acr_login_server_url }}
       resourceGroupName: ${{ steps.deploy.outputs.resource_group_name }}
