@@ -6,6 +6,9 @@ on:
       containerRegistryName:
         required: true
         type: string
+      containerRegistryUrl:
+        required: true
+        type: string
       githubSha:
         required: true
         type: string
@@ -29,16 +32,16 @@ jobs:
     - uses: actions/checkout@v2
     - name: docker build
       run: |
-        docker build . -f src/Web/Dockerfile -t ${{ inputs.containerRegistryName }}/web:${{ inputs.githubSha }}
-        docker build . -f src/PublicApi/Dockerfile -t ${{ inputs.containerRegistryName }}/api:${{ inputs.githubSha}}
+        docker build . -f src/Web/Dockerfile -t ${{ inputs.containerRegistryUrl }}/web:${{ inputs.githubSha }}
+        docker build . -f src/PublicApi/Dockerfile -t ${{ inputs.containerRegistryUrl }}/api:${{ inputs.githubSha}}
     - name: scan web container image
       uses: Azure/container-scan@v0
       with:
-        image-name: ${{ inputs.containerRegistryName }}/web:${{ inputs.githubSha}}
+        image-name: ${{ inputs.containerRegistryUrl }}/web:${{ inputs.githubSha}}
     - name: scan api container image
       uses: Azure/container-scan@v0
       with:
-        image-name: ${{ inputs.containerRegistryName }}/web:${{ inputs.githubSha}}
+        image-name: ${{ inputs.containerRegistryUrl }}/web:${{ inputs.githubSha}}
     - uses: azure/login@v1
       name: Sign in to Azure
       with:
@@ -49,5 +52,5 @@ jobs:
       run: az acr login --name ${{ inputs.containerRegistryName  }}
     - name: docker push
       run: |
-        docker push ${{ inputs.containerRegistryName }}/web:${{ inputs.githubSha}}
-        docker push ${{ inputs.containerRegistryName }}/api:${{ inputs.githubSha}}
+        docker push ${{ inputs.containerRegistryUrl }}/web:${{ inputs.githubSha}}
+        docker push ${{ inputs.containerRegistryUrl }}/api:${{ inputs.githubSha}}
